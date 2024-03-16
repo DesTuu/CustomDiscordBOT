@@ -4,4 +4,4 @@ import pathlib
 #
 # CMD_DIR = BASE_DIR / "cogs"
 
-COMMAND_PREFIX = f"!"
+COMMAND_PREFIX = f"$"
