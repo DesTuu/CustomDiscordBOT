@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import app
-from token import DISCORD_BOT_TOKEN
+import os
 
 intents = discord.Intents.all()
 intents.messages = True
@@ -18,4 +18,5 @@ async def on_ready():
 
 
 if __name__ == "__main__":
-    bot.run(app.DISCORD_BOT_TOKEN)
+    bot.run(os.environ['DISCORD_TOKEN'])
+
