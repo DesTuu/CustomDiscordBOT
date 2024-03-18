@@ -3,11 +3,11 @@ from discord.ext import commands
 import random
 
 
-class SecondCog(commands.Cog):
+class Hybrid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.hybrid_command()
     async def lottery(self, ctx):
         member = ctx.author.nick
         x = random.choice(range(100))
@@ -18,4 +18,4 @@ class SecondCog(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(SecondCog(bot))
+    await bot.add_cog(Hybrid(bot))

@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 
 
-class FirstCog(commands.Cog):
+class Reaction(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -19,4 +19,4 @@ class FirstCog(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(FirstCog(bot))
+    await bot.add_cog(Reaction(bot))
