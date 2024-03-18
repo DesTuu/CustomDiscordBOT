@@ -1,4 +1,6 @@
+import discord
 from discord.ext import commands
+import random
 
 
 class SecondCog(commands.Cog):
@@ -6,9 +8,13 @@ class SecondCog(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def hello2(self, ctx):
-        """A simple command that responds with 'Hello!'"""
-        await ctx.send("Hello2!")
+    async def lottery(self, ctx):
+        member = ctx.author.nick
+        x = random.choice(range(100))
+        if x > 50:
+            await ctx.send(f"Congratulations {member}! You have won free VIP on our server!")
+        else:
+            await ctx.send(f"Sorry {member}... You didn't won this time... Try again tomorrow!")
 
 
 async def setup(bot):

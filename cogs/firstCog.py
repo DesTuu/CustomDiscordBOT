@@ -1,5 +1,5 @@
 from discord.ext import commands
-import settings as app
+import discord
 
 
 class FirstCog(commands.Cog):
@@ -7,9 +7,15 @@ class FirstCog(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def hello1(self, ctx):
+    async def hello(self, ctx):
+        member = ctx.author.nick
         """A simple command that responds with 'Hello!'"""
-        await ctx.send("Hello1!")
+        await ctx.send(f"Hello {member}!")
+
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        if "help" in message.content:
+            await message.add_reaction("☑️")
 
 
 async def setup(bot):
