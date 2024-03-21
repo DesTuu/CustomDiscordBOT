@@ -20,7 +20,7 @@ class CustomHelpCommand(commands.DefaultHelpCommand):
             if cog is not None:
                 cog_name = cog.qualified_name if cog is not None else "No Category"
                 embed.add_field(name=cog_name,
-                                value="\n".join([f"{settings.COMMAND_PREFIX}{c.name}: {c.brief}" for c in commands]),
+                                value="\n".join([f"{settings.COMMAND_PREFIX}{c.name} {c.brief}" for c in commands]),
                                 inline=False)
         await self.get_destination().send(embed=embed)
 
@@ -33,6 +33,8 @@ async def on_ready():
     cog_files = [cog_file for cog_file in app.COG_DIR.glob('*.py') if cog_file.stem != '__init__']
     for cog_file in cog_files:
         await bot.load_extension(f"cogs.{cog_file.stem}")
+
+    print("Zalogowano pomyślnie!")
 
 
 if __name__ == "__main__":
