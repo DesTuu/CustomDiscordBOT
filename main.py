@@ -2,17 +2,17 @@ import discord
 from discord.ext import commands
 
 import settings
-import settings as app
 from my_token import DISCORD_BOT_TOKEN
 
 intents = discord.Intents.all()
 intents.messages = True
-bot = commands.Bot(command_prefix=app.COMMAND_PREFIX, intents=intents, activity=discord.Game(name="Jestę Botę"))
+bot = commands.Bot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=discord.Game(name="Jestę Botę"))
+
 
 
 class CustomHelpCommand(commands.DefaultHelpCommand):
     def get_command_signature(self, command):
-        return f"{app.COMMAND_PREFIX}{command.qualified_name} {command.signature}"
+        return f"{settings.COMMAND_PREFIX}{command.qualified_name} {command.signature}"
 
     async def send_bot_help(self, mapping):
         embed = discord.Embed(title="Help", description="Commands:", color=discord.Color.blurple())
@@ -30,11 +30,11 @@ bot.help_command = CustomHelpCommand()
 
 @bot.event
 async def on_ready():
-    cog_files = [cog_file for cog_file in app.COG_DIR.glob('*.py') if cog_file.stem != '__init__']
+    cog_files = [cog_file for cog_file in settings.COG_DIR.glob('*.py') if cog_file.stem != '__init__']
     for cog_file in cog_files:
         await bot.load_extension(f"cogs.{cog_file.stem}")
 
-    print("Zalogowano pomyślnie!")
+    settings.on_ready_message(bot)
 
 
 if __name__ == "__main__":
