@@ -9,18 +9,17 @@ intents.messages = True
 bot = commands.Bot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=discord.Game(name="Jestę Botę"))
 
 
-
 class CustomHelpCommand(commands.DefaultHelpCommand):
     def get_command_signature(self, command):
         return f"{settings.COMMAND_PREFIX}{command.qualified_name} {command.signature}"
 
     async def send_bot_help(self, mapping):
         embed = discord.Embed(title="Help", description="Commands:", color=discord.Color.blurple())
-        for cog, commands in mapping.items():
+        for cog, cmds in mapping.items():
             if cog is not None:
                 cog_name = cog.qualified_name if cog is not None else "No Category"
                 embed.add_field(name=cog_name,
-                                value="\n".join([f"{settings.COMMAND_PREFIX}{c.name} {c.brief}" for c in commands]),
+                                value="\n".join([f"{settings.COMMAND_PREFIX}{c.name} {c.brief}" for c in cmds]),
                                 inline=False)
         await self.get_destination().send(embed=embed)
 
