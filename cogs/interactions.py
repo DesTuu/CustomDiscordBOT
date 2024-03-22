@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 import random
-import gifs
+from app import gifs
 
 
 class Interactions(commands.Cog):
