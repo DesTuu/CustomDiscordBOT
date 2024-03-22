@@ -1,5 +1,6 @@
 from discord.ext import commands
 
+
 class New_channel_message(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -11,6 +12,7 @@ class New_channel_message(commands.Cog):
 
         if channel.category.name == "Weryfikacja":
             await channel.send("Nowy kanał w kategorii Weryfikacja")
+
 
 async def setup(bot):
     await bot.add_cog(New_channel_message(bot))
