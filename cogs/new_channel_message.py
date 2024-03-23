@@ -1,4 +1,6 @@
 from discord.ext import commands
+from app import settings
+import discord
 
 
 class New_channel_message(commands.Cog):
@@ -7,11 +9,11 @@ class New_channel_message(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_channel_create(self, channel):
-        if "queue" in channel.name:
-            await channel.send("Przykładowa wiadomość")
+        if isinstance(channel, discord.TextChannel) and "queue" in channel.name:
+            await channel.send(settings.QUEUE_MESSAGE)
 
-        if channel.category.name == "Weryfikacja":
-            await channel.send("Nowy kanał w kategorii Weryfikacja")
+        if isinstance(channel, discord.TextChannel) and channel.category.name == "Weryfikacja":
+            await channel.send(settings.WERYFIKACJA_MESSAGE)
 
 
 async def setup(bot):
