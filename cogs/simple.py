@@ -12,7 +12,7 @@ class Simple(commands.Cog):
         enabled=True,
         hidden=False,
     )
-    async def survey(ctx, *message):
+    async def survey(self, ctx, *message):
         message = await ctx.send(" ".join(message))
         await ctx.message.delete()
         await message.add_reaction("\U00002705")

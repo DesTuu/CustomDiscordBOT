@@ -1,5 +1,3 @@
-# Discord Bot Description in discord.py
-
 # Description
 The Discord bot is written in discord.py, a Python library for creating Discord bots. The bot is optimized for dynamically managing commands and performing various actions within a Discord server.
 

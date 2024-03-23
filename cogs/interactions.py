@@ -39,7 +39,7 @@ class Interactions(commands.Cog):
     @commands.command(
         brief=f"nickogólnydiscorda - głaszczesz wybranego użytkownika gifem"
     )
-    async def pat(ctx, user: discord.Member):
+    async def pat(self, ctx, user: discord.Member):
         embed = discord.Embed(
             title="",
             description=f"{ctx.author.mention} głaszcze {user.mention} po głowie ^^!",
@@ -53,7 +53,7 @@ class Interactions(commands.Cog):
     @commands.command(
         brief=f"nickogólnydiscorda - uderzasz wybranego użytkownika gifem"
     )
-    async def slap(ctx, user: discord.Member):
+    async def slap(self, ctx, user: discord.Member):
         embed = discord.Embed(
             title="",
             description=f"{ctx.author.mention} uderza {user.mention} prosto w twarz!",
