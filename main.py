@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from app import settings
+import settings
 from my_token import DISCORD_BOT_TOKEN
 
 intents = discord.Intents.all()
