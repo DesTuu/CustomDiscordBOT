@@ -5,7 +5,7 @@ import discord
 
 def is_moderator():
     async def my_check(ctx):
-        moderator_role = discord.utils.get(ctx.guild.roles, name="Me")
+        moderator_role = discord.utils.get(ctx.guild.roles, name="Me")  # wstaw role
         if moderator_role in ctx.author.roles:
             return True
         else:
