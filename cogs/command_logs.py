@@ -17,7 +17,7 @@ class CommandLogs(commands.Cog):
             member = guild.get_member(author_id)
             roles = member.roles
             moderator_role = discord.utils.get(guild.roles, name="Zespół RedSide")
-            info_channel = self.bot.get_channel(1227321966067716250)  # wpisz ID kanału
+            info_channel = self.bot.get_channel(1227337810030235658)
             if moderator_role in roles:
                 command_name = interaction.data["name"]
                 if command_name:

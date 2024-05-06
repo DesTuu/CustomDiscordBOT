@@ -20,7 +20,7 @@ class Moderator(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(
-        brief=f"Wycisza użytkownika - /mute @Alcia 10 m To moj powod, kolejno jednostki: s, m, h, d, w, mo, y"
+        brief=f"Wycisza użytkownika - /mute @Alcia 10 m To moj powod, unit = kolejno jednostki: s, m, h, d, w, mo, y"
     )
     @is_moderator()
     async def mute(self, ctx: commands.Context, muted_member: discord.Member, duration: int, unit: str, reason: str):
@@ -92,27 +92,44 @@ class Moderator(commands.Cog):
         # await muted_member.remove_roles(warned_role_role)
 
     @commands.hybrid_command(
-        brief=f"Daje timeouta od razu - /timeout @Alcia To moj powod"
+        brief=f"Daje timeouta od razu - /timeout @Alcia To moj powod, unit = kolejno jednostki: s, m, h, d, w, mo, y"
     )
     @is_moderator()
-    async def timeout(self, ctx: commands.Context, timeout_member: discord.Member, reason: str):
-        warned_member_id = timeout_member.id
+    async def timeout(self, ctx: commands.Context, t_member: discord.Member, t_duration: int, t_unit: str, reason: str):
+        warned_member_id = t_member.id
         timeout_member_msg = self.bot.get_user(warned_member_id)
 
         timeout_role = discord.utils.get(ctx.guild.roles, name="TIMEOUT")
         warn1_role = discord.utils.get(ctx.guild.roles, name="warn - 1")
         warn2_role = discord.utils.get(ctx.guild.roles, name="warn - 2")
 
-        if warn1_role in timeout_member.roles:
-            await timeout_member.remove_roles(warn1_role)
-        if warn2_role in timeout_member.roles:
-            await timeout_member.remove_roles(warn2_role)
+        if warn1_role in t_member.roles:
+            await t_member.remove_roles(warn1_role)
+        if warn2_role in t_member.roles:
+            await t_member.remove_roles(warn2_role)
 
-        await timeout_member.add_roles(timeout_role)
+        await t_member.add_roles(timeout_role)
         await ctx.send(f"Timeout, powód: {reason}", ephemeral=True)
         await timeout_member_msg.send(f"Timeout, powód: {reason}")
-        await asyncio.sleep(1728000)
-        await timeout_member.remove_roles(timeout_role)
+
+        if t_unit == "s":
+            await asyncio.sleep(t_duration)
+        elif t_unit == "m":
+            await asyncio.sleep(t_duration * 60)
+        elif t_unit == "h":
+            await asyncio.sleep(t_duration * 3600)
+        elif t_unit == "d":
+            await asyncio.sleep(t_duration * 86_400)
+        elif t_unit == "w":
+            await asyncio.sleep(t_duration * 604_800)
+        elif t_unit == "mo":
+            await asyncio.sleep(t_duration * 2_629_746)
+        elif t_unit == "y":
+            await asyncio.sleep(t_duration * 31_556_95)
+        else:
+            raise ValueError
+
+        await t_member.remove_roles(timeout_role)
 
 
 async def setup(bot):
