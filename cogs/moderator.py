@@ -21,7 +21,7 @@ class Moderator(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(
-        brief=f"Wycisza użytkownika - /mute @Alcia 10 m Powód, unit = kolejno jednostki po ang.: s, m, h, d, w, mo, y"
+        brief=f"Wycisza użytkownika: /mute @Alcia 10 m Powód, unit = jednostki po ang.: s, m, h, d, w, mo, y"
     )
     @is_moderator()
     async def mute(self, ctx: commands.Context, muted_member: discord.Member, duration: int, unit: str, reason: str):
@@ -57,7 +57,7 @@ class Moderator(commands.Cog):
         #     await muted_user.send(f"Okres wyciszenia użytkownika {muted_member.mention} minął.")
 
     @commands.hybrid_command(
-        brief=f"Daje warna - /warn @Alcia Powód"
+        brief=f"Daje warna: /warn @Alcia Powód"
     )
     @is_moderator()
     async def warn(self, ctx: commands.Context, warned_member: discord.Member, reason: str):
@@ -97,7 +97,7 @@ class Moderator(commands.Cog):
         # await muted_member.remove_roles(warned_role_role)
 
     @commands.hybrid_command(
-        brief=f"Daje timeouta od razu - /timeout @Alcia Powód, unit = kolejno jednostki po ang.: s, m, h, d, w, mo, y"
+        brief=f"Daje timeouta od razu: /timeout @Alcia Powód, unit = jednostki po ang.: s, m, h, d, w, mo, y"
     )
     @is_moderator()
     async def timeout(self, ctx: commands.Context, t_member: discord.Member, t_duration: int, t_unit: str, reason: str):

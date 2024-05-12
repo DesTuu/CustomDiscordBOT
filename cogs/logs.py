@@ -18,12 +18,12 @@ class Logs(commands.Cog):
                 muted_micro_channel = self.bot.get_channel(1186401279921111131)
 
                 if moderator_role in member.roles:
-                    await muted_micro_channel.send(f"**{member.nick}/{member.name}** właśnie **wyciszył** swój mikrofon.")
+                    await muted_micro_channel.send(f"**{member.display_name}/{member.name}** właśnie **wyciszył** swój mikrofon.")
                 else:
                     await muted_micro_channel.send(f"{member.mention} właśnie **wyciszył** swój mikrofon.")
             if before.self_mute and not after.self_mute:
                 if moderator_role in member.roles:
-                    await muted_micro_channel.send(f"**{member.nick}/{member.name}** właśnie **włączył** swój mikrofon.")
+                    await muted_micro_channel.send(f"**{member.display_name}/{member.name}** właśnie **włączył** swój mikrofon.")
                 else:
                     await muted_micro_channel.send(f"{member.mention} właśnie **włączył** swój mikrofon.")
 
@@ -33,7 +33,7 @@ class Logs(commands.Cog):
             user_disconnected_channel = self.bot.get_channel(1239107359737909330)
             if moderator_role in member.roles:
                 await user_disconnected_channel.send(
-                    f"**{member.nick}/{member.name}** właśnie opuścił kanał **{before.channel.name}**.")
+                    f"**{member.display_name}/{member.name}** właśnie opuścił kanał **{before.channel.name}**.")
             else:
                 await user_disconnected_channel.send(f"{member.mention} właśnie opuścił kanał **{before.channel.name}**.")
 

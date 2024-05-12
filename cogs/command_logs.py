@@ -29,14 +29,14 @@ class CommandLogs(commands.Cog):
                     cmd_channel = self.bot.get_channel(cmd_channel_id)
                     user = await self.bot.fetch_user(arguments[0])
                     username = user.mention
-                    await info_channel.send(f"{str(member.name).title()} właśnie użył komendy: {command_name}\n"
-                                            f"Na kanale: {cmd_channel.name}\n"
-                                            f"Na użytkowniku: {username}\n"
-                                            f"Na określony czas: {arguments[1:-1]}\n"
-                                            f"Powód: {arguments[-1]}")
+                    await info_channel.send(
+                        f"**{member.display_name}/{member.name}** właśnie użył/a komendy: {command_name}\n"
+                        f"Na kanale: {cmd_channel.name}\n"
+                        f"Na użytkowniku: {username}\n"
+                        f"Na określony czas (jeśli jest): {arguments[1:-1]}\n"
+                        f"Powód: {arguments[-1]}")
                 else:
                     await info_channel.send(f"{member.name} tried to use ur command")
-
 
 
 async def setup(bot):
