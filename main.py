@@ -6,7 +6,7 @@ from my_token import DISCORD_BOT_TOKEN
 
 intents = discord.Intents.all()
 intents.messages = True
-bot = commands.Bot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=discord.Game(name="$help"))
+bot = commands.Bot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=discord.Game(name="/help"))
 
 bot.remove_command('help')
 
