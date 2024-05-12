@@ -1,6 +1,7 @@
 import asyncio
 from discord.ext import commands
 import discord
+from app import messages
 
 
 def is_moderator():
@@ -30,8 +31,9 @@ class Moderator(commands.Cog):
 
         await muted_member.add_roles(muted_role)
         if muted_user:
-            await ctx.send(f"Został/a wyciszony/a na {duration} {unit}, powód: {reason}", ephemeral=True)
-            await muted_user.send(f"Zostałeś/aś wyciszony na {duration} {unit}, powód: {reason}")
+            await ctx.send(f"{muted_user} został/a wyciszony/a na {duration}{unit},\npowód: {reason}", ephemeral=True)
+            await muted_user.send(
+                f"Zostałeś/aś wyciszony na {duration}{unit}.\nPowód: {reason} \nKara wystawiona przez: {ctx.author} \n\n{messages.KARA_MESSAGE}")
 
         if unit == "s":
             await asyncio.sleep(duration)
@@ -69,24 +71,27 @@ class Moderator(commands.Cog):
         if warn1_role in warned_member.roles and warn2_role not in warned_member.roles:
             await warned_member.add_roles(warn2_role)
             if warned_user_msg:
-                await ctx.send(f"Warned 2, powód: {reason}", ephemeral=True)
-                await warned_user_msg.send(f"Warned 2, powód: {reason}")
+                await ctx.send(f"{warned_member} Warned 2, powód: {reason}", ephemeral=True)
+                await warned_user_msg.send(
+                    f"Warned 2, \nPowód: {reason} \nKara wystawiona przez: {ctx.author} \n\n{messages.KARA_MESSAGE}")
         elif warn1_role in warned_member.roles and warn2_role in warned_member.roles:
             await warned_member.add_roles(timeout_role)
             if warned_user_msg:
-                await ctx.send(f"Timeout, powód: {reason}", ephemeral=True)
-                await warned_user_msg.send(f"Timeout, powód: {reason}")
+                await ctx.send(f"{warned_member} Timeout, powód: {reason}", ephemeral=True)
+                await warned_user_msg.send(
+                    f"Cześć, ze względu na otrzymanie trzeciego warna zostałeś wysłany na 48h przerwy.  \nPowód: {reason} \nKara wystawiona przez: {ctx.author} \n\n{messages.KARA_MESSAGE}")
             await warned_member.remove_roles(warn1_role)
             await warned_member.remove_roles(warn2_role)
-            await asyncio.sleep(1728000)  # czas po jakim ma być usuwana ranga timeout, ustawione na 48h
+            await asyncio.sleep(172800)  # czas po jakim ma być usuwana ranga timeout, ustawione na 48h
             await warned_member.remove_roles(timeout_role)
         elif timeout_role in warned_member.roles:
             await ctx.send(f"Błąd! Użytkownik posiada już rangę Timeout!", ephemeral=True)
         else:
             await warned_member.add_roles(warn1_role)
             if warned_user_msg:
-                await ctx.send(f"Warned 1, powód: {reason}", ephemeral=True)
-                await warned_user_msg.send(f"Warned 1, powód: {reason}")
+                await ctx.send(f"{warned_member} Warned 1, powód: {reason}", ephemeral=True)
+                await warned_user_msg.send(
+                    f"Cześć, otrzymałeś pierwszego warna. \nPowód: {reason} \nKara wystawiona przez: {ctx.author} \n\n{messages.KARA_MESSAGE}")
 
         # await muted_member.add_roles(warned_role)
         # await muted_member.remove_roles(warned_role_role)
@@ -109,8 +114,9 @@ class Moderator(commands.Cog):
             await t_member.remove_roles(warn2_role)
 
         await t_member.add_roles(timeout_role)
-        await ctx.send(f"Timeout, powód: {reason}", ephemeral=True)
-        await timeout_member_msg.send(f"Timeout, powód: {reason}")
+        await ctx.send(f"{t_member} Timeout, powód: {reason}", ephemeral=True)
+        await timeout_member_msg.send(
+            f"Cześć, utraciłeś dostęp do kanałów.\nPowód: {reason} \nKara wystawiona przez: {ctx.author} \n\n{messages.KARA_MESSAGE}")
 
         if t_unit == "s":
             await asyncio.sleep(t_duration)

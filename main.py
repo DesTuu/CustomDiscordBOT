@@ -8,23 +8,17 @@ intents = discord.Intents.all()
 intents.messages = True
 bot = commands.Bot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=discord.Game(name="$help"))
 
+bot.remove_command('help')
 
-# class CustomHelpCommand(commands.DefaultHelpCommand):
-#     def get_command_signature(self, command):
-#         return f"{settings.COMMAND_PREFIX}{command.qualified_name} {command.signature}"
-#
-#     async def send_bot_help(self, mapping):
-#         embed = discord.Embed(title="Help", description="Commands:", color=discord.Color.blurple())
-#         for cog, cmds in mapping.items():
-#             if cog is not None:
-#                 cog_name = cog.qualified_name if cog is not None else "No Category"
-#                 embed.add_field(name=cog_name,
-#                                 value="\n".join([f"{settings.COMMAND_PREFIX}{c.name} {c.brief}" for c in cmds]),
-#                                 inline=False)
-#         await self.get_destination().send(embed=embed)
-#
-#
-# bot.help_command = CustomHelpCommand()
+
+@commands.hybrid_command(brief=f"Wyświetla wszystkie komendy i ich opisy")
+async def help(ctx: commands.Context) -> None:
+    embed = discord.Embed(title="Dostępne Komendy", color=discord.Color.blue())
+    commands_sorted = sorted(bot.commands, key=lambda cmd: cmd.name)
+    for command in commands_sorted:
+        if not command.hidden and command.name != 'help':
+            embed.add_field(name=f"{command.name}", value=command.brief, inline=False)
+    await ctx.send(embed=embed)
 
 
 @bot.event
@@ -32,6 +26,7 @@ async def on_ready():
     cog_files = [cog_file for cog_file in settings.COG_DIR.glob('*.py') if cog_file.stem != '__init__']
     for cog_file in cog_files:
         await bot.load_extension(f"cogs.{cog_file.stem}")
+    bot.add_command(help)
 
     await bot.tree.sync()
 
