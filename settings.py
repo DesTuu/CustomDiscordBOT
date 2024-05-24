@@ -8,7 +8,8 @@ COG_DIR = BASE_DIR / "cogs"
 
 APP_DIR = BASE_DIR / "app"
 
-roles_to_remove = ["Muted", "warn - 1", "warn - 2", "TIMEOUT"]
+# roles_to_remove = ["Muted", "warn - 1", "warn - 2", "TIMEOUT"]
+roles_to_remove = ["Muted", "TIMEOUT"]
 
 
 def get_guild_names(bot):
