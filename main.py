@@ -30,6 +30,32 @@ async def on_ready():
 
     await bot.tree.sync()
 
+    # ----------------------------------------------------------------------------------------------------------------
+    # Usuwanie ról użytkownikom na start, podczas resetu bota
+    # ----------------------------------------------------------------------------------------------------------------
+
+    for guild in bot.guilds:
+        roles = [discord.utils.get(guild.roles, name=role_name) for role_name in settings.roles_to_remove]
+
+        if None in roles:
+            print(f"One or more roles not found in guild {guild.name}. Please check the role names.")
+            continue
+
+        for member in guild.members:
+            roles_to_remove_from_member = [role for role in roles if role in member.roles]
+            if roles_to_remove_from_member:
+                try:
+                    await member.remove_roles(*roles_to_remove_from_member)
+                    print(f"Removed roles {roles_to_remove_from_member} from {member}")
+                except discord.Forbidden:
+                    print(f"Cannot remove roles from {member}. Missing permissions.")
+                except discord.HTTPException as e:
+                    print(f"Failed to remove roles from {member} due to an HTTPException: {e}")
+
+        print("Roles have been cleared from all members.")
+
+    # ----------------------------------------------------------------------------------------------------------------
+
     settings.on_ready_message(bot)
 
 
